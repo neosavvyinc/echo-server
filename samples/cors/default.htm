@@ -281,12 +281,14 @@
 
   function handleError(event) {
     logEvent('error');
-    logXhr(event.currentTarget);
+    if( event && event.currentTarget )
+        logXhr(event.currentTarget);
   }
 
   function handleLoad(event) {
     logEvent('load');
-    logXhr(event.currentTarget);
+    if( event && event.currentTarget )
+        logXhr(event.currentTarget);
   }
 
   function handleTimeout(event) {
