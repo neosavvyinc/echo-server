@@ -26,11 +26,20 @@ fs.watchFile(filename, {interval: 1000}, loadFileContents);
 var jqueryFilename = 'jquery-1.4.4.min.js';
 var jquery = fs.readFileSync(jqueryFilename);
 
+var json2jsfile = 'json2.js';
+var json2js = fs.readFileSync(json2jsfile);
+
 require('http').createServer(function (request, response) {
   if (request.url.indexOf(jqueryFilename) > 0) {
-  response.writeHead(200, {'Content-Type': 'text/javascript'});
-  response.end(jquery);
-  } else {
+    response.writeHead(200, {'Content-Type': 'text/javascript'});
+    response.end(jquery);
+  }
+  else if ( request.url.indexOf(json2jsfile) > 0 ) {
+    response.writeHead(200, {'Content-Type': 'text/javascript'});
+    response.end(json2js);
+  }
+  else
+  {
     response.writeHead(200, {'Content-Type': 'text/html'});
     response.end(contents);
   }

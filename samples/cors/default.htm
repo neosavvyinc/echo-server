@@ -118,6 +118,7 @@
 
 </div>
 
+<script src="json2.js" type="text/javascript"></script>
 <script src="jquery-1.4.4.min.js"></script>
 <script>
 
@@ -219,16 +220,25 @@
   }
 
   function createCORSRequest(method, url){
-    var xhr = new XMLHttpRequest();
-    if ("withCredentials" in xhr){
-      xhr.open(method, url, true);
-    } else if (typeof XDomainRequest != "undefined"){
-      xhr = new XDomainRequest();
-      xhr.open(method, url);
-    } else {
-      xhr = null;
+    if( 'withCredentials' in new XMLHttpRequest()) {
+        var xhr = new XMLHttpRequest();
+        xhr.open(method, url, true);
+        return xhr;
     }
-    return xhr;
+    else {
+
+        if( typeof XDomainRequest !== "undefined") {
+            var xdr = new XDomainRequest();
+            xdr.open(method, url);
+            return xdr;
+        }
+        else {
+            //problem - need to support XDR or XHR
+            return undefined;
+        }
+
+
+    }
   }
 
   function resetResponseDivs() {
